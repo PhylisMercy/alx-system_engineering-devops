@@ -1,1 +1,4 @@
-Web stack debugging #1
+#!/usr/bin/env bash
+# Fixing issues in a container
+cp -f /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
