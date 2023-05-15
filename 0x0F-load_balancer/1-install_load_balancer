@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Configure HAProxy load balancer server
+
+apt-get -y update
+apt-get install -y haproxy
+systemctl enable haproxy
+
+echo -e "backend web-backend
+   balance roundrobin
+   server web1 54.237.51.138 check
+   server web2 34.229.254.255 check
+
+frontend http
+  bind *:80
+  mode http
+
+  acl url_blog path_beg /
+  #use_backend blog-backend if url_blog
+
+  default_backend web-backend
+" > tmp
+
+
+sed -i '/^\s*errorfile 504 */r tmp' /etc/haproxy/haproxy.cfg
+/etc/init.d/haproxy start
+
