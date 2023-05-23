@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Automatizing the nginx configuration
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo sed -i "15i \\\tadd_header X-Served-By 124509-web-01;" /etc/nginx/nginx.conf
-sudo service nginx restart
+# Configure Nginx server
+apt-get -y update
+apt-get -y install nginx
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+new_string="server_name _;\n\tadd_header X-Served-By $HOSTNAME;"
+sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-available/default
+service nginx restart
